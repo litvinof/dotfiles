@@ -23,6 +23,9 @@
 (setq use-package-always-ensure t)
 
 
+(setq make-backup-files nil)
+
+
 (use-package modus-vivendi-theme :ensure)
 (load-theme 'modus-vivendi t)
 
