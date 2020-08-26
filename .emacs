@@ -5,9 +5,9 @@
 (setq inhibit-startup-screen t)
 
 ;; (set-default-font "Ubuntu Mono 18")
-(set-default-font "JetBrains Mono 17")
+;; (set-default-font "JetBrains Mono 17")
 ;; (set-default-font "PragmataPro 19")
-;; (set-default-font "Hack 17")
+(set-default-font "Hack 18")
 (show-paren-mode 1)
 
 (add-to-list 'package-archives
