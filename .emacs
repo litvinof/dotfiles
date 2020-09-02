@@ -3,11 +3,12 @@
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 (setq inhibit-startup-screen t)
+(setq split-width-threshold 1)
 
 ;; (set-default-font "Ubuntu Mono 18")
 ;; (set-default-font "JetBrains Mono 17")
 ;; (set-default-font "PragmataPro 19")
-(set-default-font "Hack 18")
+(set-default-font "Hack 16")
 (show-paren-mode 1)
 
 (add-to-list 'package-archives
@@ -26,9 +27,9 @@
 (setq make-backup-files nil)
 
 
-(use-package modus-vivendi-theme :ensure)
-(load-theme 'modus-vivendi t)
-
+;; (use-package modus-vivendi-theme :ensure)
+;; (load-theme 'modus-vivendi t)
+(load-theme 'gruber-darker t)
 
 ;; ;; An atom-one-dark theme for smart-mode-line
 ;; (setq sml/no-confirm-load-theme t)
@@ -88,8 +89,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fringe ((t (:background "black" :foreground "#453d41"))))
- '(whitespace-space ((t (:background "#000000" :foreground "windowBackgroundColor")))))
+ '(fringe ((t (:background "#181818" :foreground "#453d41"))))
+ '(whitespace-space ((t (:background "#181818" :foreground "windowBackgroundColor")))))
 
 
 (setq python-shell-interpreter "/Users/viacheslav/.pyenv/shims/python")
