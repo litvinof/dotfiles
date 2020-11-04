@@ -6,10 +6,11 @@
 (setq split-width-threshold 1)
 
 ;; (set-default-font "Ubuntu Mono 18")
-;; (set-default-font "JetBrains Mono 17")
+(set-frame-font "JetBrains Mono 15" nil t)
 ;; (set-default-font "PragmataPro 19")
-(set-default-font "Hack 16")
+;; (set-default-font "Hack 16")
 (show-paren-mode 1)
+(global-display-line-numbers-mode 1)
 
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -18,18 +19,23 @@
                      ("melpa" . "https://melpa.org/packages/")))
 
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(when window-system (set-frame-size (selected-frame) 120 50))
 
 (setq make-backup-files nil)
 
 
 ;; (use-package modus-vivendi-theme :ensure)
 ;; (load-theme 'modus-vivendi t)
-(load-theme 'gruber-darker t)
+(use-package espresso-theme :ensure)
+(load-theme 'espresso t)
+(use-package helm-themes)
+;; (load-theme 'gruber-darker t)
+
 
 ;; ;; An atom-one-dark theme for smart-mode-line
 ;; (setq sml/no-confirm-load-theme t)
@@ -89,8 +95,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fringe ((t (:background "#181818" :foreground "#453d41"))))
- '(whitespace-space ((t (:background "#181818" :foreground "windowBackgroundColor")))))
+ '(cursor ((t (:background "#5e6170"))))
+ '(fringe ((t (:background "#ffffff" :foreground "#453d41"))))
+ '(helm-bookmark-directory ((t (:background "#ffffff" :foreground "#F93232"))))
+ '(helm-buffer-directory ((t (:background "white" :foreground "#F93232"))))
+ '(helm-ff-directory ((t (:extend t :background "white" :foreground "DarkRed"))))
+ '(helm-ff-dotted-directory ((t (:extend t :background "white" :foreground "black"))))
+ '(helm-ff-dotted-symlink-directory ((t (:extend t :background "white" :foreground "DarkOrange"))))
+ '(helm-selection ((t (:extend t :background "#C9D0D9" :distant-foreground "black"))))
+ '(helm-source-header ((t (:extend t :foreground "black" :weight bold :height 1.1))))
+ '(line-number ((t (:background "#ffffff" :foreground "#a8a8a8" :slant italic))))
+ '(line-number-current-line ((t (:background "#9599b0" :foreground "white" :weight extra-bold))))
+ '(whitespace-space ((t (:background "#ffffff" :foreground "windowBackgroundColor")))))
 
 
 (setq python-shell-interpreter "/Users/viacheslav/.pyenv/shims/python")
@@ -138,8 +154,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (dockerfile-mode doom-modeline all-the-icons which-key use-package smart-mode-line-atom-one-dark-theme modus-vivendi-theme lsp-ui lsp-python-ms lsp-ivy lsp-docker helm-lsp helm-ag gruber-darker-theme flycheck distinguished-theme dap-mode company-lsp company-c-headers))))
+   '(dockerfile-mode doom-modeline all-the-icons which-key use-package smart-mode-line-atom-one-dark-theme modus-vivendi-theme lsp-ui lsp-python-ms lsp-ivy lsp-docker helm-lsp helm-ag gruber-darker-theme flycheck distinguished-theme dap-mode company-lsp company-c-headers)))
 
 (use-package all-the-icons)
 (use-package doom-modeline
