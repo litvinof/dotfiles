@@ -1,68 +1,58 @@
 (package-initialize)
-
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
-(setq inhibit-startup-screen t)
-(setq split-width-threshold 1)
-
-;; (set-default-font "Ubuntu Mono 18")
-(set-frame-font "JetBrains Mono 15" nil t)
-;; (set-default-font "PragmataPro 19")
-;; (set-default-font "Hack 16")
-(show-paren-mode 1)
-(global-display-line-numbers-mode 1)
-
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                      ("melpa" . "https://melpa.org/packages/")))
-
-
-;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(when window-system (set-frame-size (selected-frame) 120 50))
 
+(tool-bar-mode -1)
+(toggle-scroll-bar -1)
+(setq inhibit-startup-screen t)
+(setq split-width-threshold nil) ;; split vertically by default
+(show-paren-mode 1) ;; show parentheses pairs
+(global-display-line-numbers-mode 1)
+(setq-default truncate-lines 0)
 (setq make-backup-files nil)
 
+;; Position on startup
+(add-to-list 'default-frame-alist '(left   . 200))
+(add-to-list 'default-frame-alist '(top    . 100))
+(add-to-list 'default-frame-alist '(height . 55))
+(add-to-list 'default-frame-alist '(width  . 130))
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; fullscreen
 
-;; (use-package modus-vivendi-theme :ensure)
-;; (load-theme 'modus-vivendi t)
-(use-package espresso-theme :ensure)
-(load-theme 'espresso t)
-(use-package helm-themes)
-;; (load-theme 'gruber-darker t)
 
+(use-package minimal-theme :ensure)
+(load-theme 'minimal-light t)
+;; Other themes
+;; - modus-vivendi-theme (modus-vivendi)
+;; - espresso-theme (espresso)
+;; - gruber-darker (gruber-darker)
+;; - distinguished-theme (distinguished)
 
-;; ;; An atom-one-dark theme for smart-mode-line
-;; (setq sml/no-confirm-load-theme t)
-;; (use-package smart-mode-line-atom-one-dark-theme :ensure t)
+(set-frame-font "JetBrains Mono 13" nil t)
+;; Other fonts
+;; - Ubuntu Mono 18
+;; - PragmataPro 19
+;; - Hack 16
 
-;; ;; smart-mode-line
-;; (use-package smart-mode-line
-;;   :config
-;;   (setq sml/theme 'atom-one-dark)
-;;   (sml/setup))
 
 
 (setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark)))
-
-; Set cursor color
-(set-cursor-color "#e6c079")
 (setq ring-bell-function 'ignore)
-
-; Set time to 24hrs format
-(setq display-time-24hr-format t)
-
 (blink-cursor-mode 0)
-(auto-save-mode 0)
 
 
-(use-package yaml-mode)
-(use-package dockerfile-mode)
+;; Modeline
+(use-package all-the-icons)
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+(setq doom-modeline-height 10)
+(put 'upcase-region 'disabled nil)
 
 
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -96,12 +86,19 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cursor ((t (:background "#5e6170"))))
+ '(flycheck-error ((t (:underline "Red1"))))
+ '(flycheck-info ((t (:underline "ForestGreen"))))
+ '(flycheck-warning ((t (:underline "DarkOrange"))))
+ '(font-lock-string-face ((t (:foreground "DarkRed" :background nil))))
  '(fringe ((t (:background "#ffffff" :foreground "#453d41"))))
  '(helm-bookmark-directory ((t (:background "#ffffff" :foreground "#F93232"))))
  '(helm-buffer-directory ((t (:background "white" :foreground "#F93232"))))
  '(helm-ff-directory ((t (:extend t :background "white" :foreground "DarkRed"))))
  '(helm-ff-dotted-directory ((t (:extend t :background "white" :foreground "black"))))
  '(helm-ff-dotted-symlink-directory ((t (:extend t :background "white" :foreground "DarkOrange"))))
+ '(helm-ff-executable ((t (:extend t :foreground "darkgreen"))))
+ '(helm-ff-file-extension ((t (:extend t :foreground "darkred"))))
+ '(helm-ff-invalid-symlink ((t (:foreground "red3"))))
  '(helm-selection ((t (:extend t :background "#C9D0D9" :distant-foreground "black"))))
  '(helm-source-header ((t (:extend t :foreground "black" :weight bold :height 1.1))))
  '(line-number ((t (:background "#ffffff" :foreground "#a8a8a8" :slant italic))))
@@ -109,24 +106,18 @@
  '(whitespace-space ((t (:background "#ffffff" :foreground "windowBackgroundColor")))))
 
 
-(setq python-shell-interpreter "/Users/viacheslav/.pyenv/shims/python")
 
 (setq lsp-keymap-prefix "s-l")
-
+(setq lsp-prefer-flymake nil)
 (use-package lsp-mode
   :config
-   (lsp-register-custom-settings
-   '(("pyls.plugins.pyls_mypy.enabled" t t)
-     ("pyls.plugins.pyls_mypy.live_mode" nil t)
-     ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t)))
+  ;; Custom LSP settings
+  (setq lsp-clients-python-library-directories "/Users/slava/.pyenv/shims/python")
+  ;; (setq lsp-pyls-server-command "/usr/local/bin/pyls")
+  ;; (setq lsp-pyls-configuration-sources "/usr/local/bin/pycodestyle")
 
-  (setq lsp-clients-python-library-directories "/Users/viacheslav/.pyenv/shims")
-  (setq lsp-pyls-server-command "/Users/viacheslav/.pyenv/shims/pyls")
-  (setq lsp-pyls-configuration-sources "/Users/viacheslav/.pyenv/shims/pycodestyle")
-
-  (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd")
-  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
+  ;; (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd")
+  ;; (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
 
   :hook ((c++-mode . lsp)
 	 (c-mode . lsp)
@@ -137,29 +128,31 @@
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode :ensure t)
-;; if you are helm user
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
-;; if you are ivy user
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-
 (use-package company-lsp)
+(use-package flycheck-pycheckers)
+(use-package format-all)
+(use-package which-key)
+(use-package lsp-python-ms)
+(use-package lsp-docker)
+(use-package flycheck)
+(use-package yaml-mode)
+(use-package dockerfile-mode)
 
 
+
+;; PYTHON
+(setq python-shell-interpreter "/Users/slava/.pyenv/shims/python")
 (add-hook 'python-mode-hook
 	  (lambda ()
 	    (whitespace-mode)))
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(dockerfile-mode doom-modeline all-the-icons which-key use-package smart-mode-line-atom-one-dark-theme modus-vivendi-theme lsp-ui lsp-python-ms lsp-ivy lsp-docker helm-lsp helm-ag gruber-darker-theme flycheck distinguished-theme dap-mode company-lsp company-c-headers)))
-
-(use-package all-the-icons)
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
-(setq doom-modeline-height 10)
-(put 'upcase-region 'disabled nil)
-
+   '(lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-python-ms lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
