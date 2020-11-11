@@ -17,6 +17,7 @@
 (setq-default truncate-lines 0)
 (setq make-backup-files nil)
 
+
 ;; Position on startup
 (add-to-list 'default-frame-alist '(left   . 200))
 (add-to-list 'default-frame-alist '(top    . 100))
@@ -79,7 +80,6 @@
                               (helm-mode 1)
                               (helm-autoresize-mode 1)))
 
-(put 'set-goal-column 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -126,7 +126,6 @@
   :commands lsp)
 
 
-;; optionally
 (use-package lsp-ui :commands lsp-ui-mode :ensure t)
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package company-lsp)
