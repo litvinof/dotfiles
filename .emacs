@@ -14,6 +14,8 @@
 (setq split-width-threshold nil) ;; split vertically by default
 (show-paren-mode 1) ;; show parentheses pairs
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+;; (setq display-line-numbers-type nil)
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (setq-default truncate-lines 0)
 (setq make-backup-files nil)
 
@@ -28,17 +30,20 @@
 
 (use-package minimal-theme :ensure)
 (load-theme 'minimal-light t)
+;; (use-package distinguished-theme :ensure)
+;; (load-theme 'distinguished t)
 ;; Other themes
 ;; - modus-vivendi-theme (modus-vivendi)
 ;; - espresso-theme (espresso)
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
-(set-frame-font "JetBrains Mono 13" nil t)
+(set-frame-font "Ubuntu Mono 18" nil t)
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
 ;; - Hack 16
+;; - JetBrains Mono 15
 
 
 
@@ -101,8 +106,7 @@
  '(helm-ff-invalid-symlink ((t (:foreground "red3"))))
  '(helm-selection ((t (:extend t :background "#C9D0D9" :distant-foreground "black"))))
  '(helm-source-header ((t (:extend t :foreground "black" :weight bold :height 1.1))))
- '(line-number ((t (:background "#ffffff" :foreground "#a8a8a8" :slant italic))))
- '(line-number-current-line ((t (:background "#9599b0" :foreground "white" :weight extra-bold))))
+ '(line-number ((t (:background "#ffffff" :foreground "#a8a8a8"))))
  '(whitespace-space ((t (:background "#ffffff" :foreground "windowBackgroundColor")))))
 
 
@@ -123,8 +127,8 @@
   (setq lsp-pyls-server-command "/Users/slava/.pyenv/shims/pyls")
   (setq lsp-pyls-configuration-sources "/Users/slava/.pyenv/shims/pycodestyle")
 
-  ;; (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd")
-  ;; (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
+  (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd")
+  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
 
   :hook ((c++-mode . lsp)
 	 (c-mode . lsp)
