@@ -28,8 +28,8 @@
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; fullscreen
 
 
-(use-package minimal-theme :ensure)
-(load-theme 'minimal-light t)
+(use-package gruber-darker-theme :ensure)
+(load-theme 'gruber-darker t)
 ;; (use-package distinguished-theme :ensure)
 ;; (load-theme 'distinguished t)
 ;; Other themes
@@ -38,7 +38,7 @@
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
-(set-frame-font "Ubuntu Mono 18" nil t)
+(set-frame-font "JetBrains Mono 15" nil t)
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
@@ -90,26 +90,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cursor ((t (:background "#5e6170"))))
+ '(cursor ((t (:background "#e2d62f"))))
  '(flycheck-error ((t (:underline "Red1"))))
  '(flycheck-info ((t (:underline "ForestGreen"))))
  '(flycheck-warning ((t (:underline "DarkOrange"))))
- '(font-lock-string-face ((t (:foreground "DarkRed" :background nil))))
- '(fringe ((t (:background "#ffffff" :foreground "#453d41"))))
- '(helm-bookmark-directory ((t (:background "#ffffff" :foreground "#F93232"))))
- '(helm-buffer-directory ((t (:background "white" :foreground "#F93232"))))
- '(helm-ff-directory ((t (:extend t :background "white" :foreground "DarkRed"))))
- '(helm-ff-dotted-directory ((t (:extend t :background "white" :foreground "black"))))
- '(helm-ff-dotted-symlink-directory ((t (:extend t :background "white" :foreground "DarkOrange"))))
- '(helm-ff-executable ((t (:extend t :foreground "darkgreen"))))
- '(helm-ff-file-extension ((t (:extend t :foreground "darkred"))))
- '(helm-ff-invalid-symlink ((t (:foreground "red3"))))
- '(helm-selection ((t (:extend t :background "#C9D0D9" :distant-foreground "black"))))
- '(helm-source-header ((t (:extend t :foreground "black" :weight bold :height 1.1))))
- '(line-number ((t (:background "#ffffff" :foreground "#a8a8a8"))))
- '(whitespace-space ((t (:background "#ffffff" :foreground "windowBackgroundColor")))))
-
-
+ '(fringe ((t (:background "#181818" :foreground "#e4e4ef")))))
 
 (setq lsp-keymap-prefix "s-l")
 (setq lsp-prefer-flymake nil)
@@ -132,14 +117,25 @@
 
   :hook ((c++-mode . lsp)
 	 (c-mode . lsp)
-	 (python-mode . lsp))
+	 (python-mode . lsp)
+	 (js-mode . lsp)
+	 (js-jsx-mode . lsp))
 
   :commands lsp)
+
 (setq lsp-pyls-plugins-flake8-enabled t)
+
+(setq lsp-eldoc-enable-hover nil)
+(setq
+    lsp-signature-auto-activate t
+    lsp-signature-doc-lines 1)
+
+(with-eval-after-load 'js
+  (define-key js-mode-map (kbd "M-.") nil))
 
 (use-package lsp-ui :commands lsp-ui-mode :ensure t)
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
-(use-package company-lsp)
+(use-package company)
 (use-package flycheck-pycheckers)
 (use-package format-all)
 (use-package which-key)
@@ -230,7 +226,7 @@
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
-
+(use-package lsp-treemacs)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -238,4 +234,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
+   '(company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
