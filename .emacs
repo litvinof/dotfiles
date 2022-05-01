@@ -38,12 +38,13 @@
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
-(set-frame-font "JetBrains Mono 15" nil t)
+(set-frame-font "Hack 17" nil t)
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
 ;; - Hack 16
 ;; - JetBrains Mono 15
+;; - Cousine 17
 
 
 
@@ -61,7 +62,10 @@
 (put 'upcase-region 'disabled nil)
 
 
+(use-package magit)
+
 (global-set-key (kbd "C-x g") 'magit-status)
+
 
 (use-package helm
   ;; Override default key bindings with those from Helm
@@ -108,11 +112,11 @@
      ("pyls.plugins.flake8.enabled" t t)))
 
   ;; Custom LSP settings
-  (setq lsp-clients-python-library-directories "/Users/slava/.pyenv/shims/python")
-  (setq lsp-pyls-server-command "/Users/slava/.pyenv/shims/pyls")
-  (setq lsp-pyls-configuration-sources "/Users/slava/.pyenv/shims/pycodestyle")
+  ;; (setq lsp-clients-python-library-directories "/Users/slava/.pyenv/shims/python")
+  ;; (setq lsp-pyls-server-command "/Users/slava/.pyenv/shims/pyls")
+  ;; (setq lsp-pyls-configuration-sources "/Users/slava/.pyenv/shims/pycodestyle")
 
-  (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd")
+  (setq lsp-clients-clangd-executable "/opt/homebrew/opt/llvm/bin/clangd")
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
 
   :hook ((c++-mode . lsp)
@@ -234,4 +238,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
+   '(magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
+
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+
+(global-set-key [C-f1] 'show-file-name) ; Or any other key you want
