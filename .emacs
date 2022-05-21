@@ -28,20 +28,21 @@
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; fullscreen
 
 
-(use-package gruber-darker-theme :ensure)
-(load-theme 'gruber-darker t)
-;; (use-package distinguished-theme :ensure)
-;; (load-theme 'distinguished t)
+(use-package distinguished-theme :ensure)
+(load-theme 'distinguished t)
+;;(use-package gruber-darker-theme :ensure)
+;;(load-theme 'gruber-darker t)
 ;; Other themes
 ;; - modus-vivendi-theme (modus-vivendi)
 ;; - espresso-theme (espresso)
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
-(set-frame-font "Hack 17" nil t)
+(set-frame-font "PragmataPro Liga 18" nil t)
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
+;; - Essential PragmataPro 19
 ;; - Hack 16
 ;; - JetBrains Mono 15
 ;; - Cousine 17
@@ -156,6 +157,14 @@
 	  (lambda ()
 	    (whitespace-mode)))
 
+(add-hook 'js-jsx-mode-hook
+	  (lambda ()
+	    (whitespace-mode)))
+
+(add-hook 'javascript-mode-hook
+	  (lambda ()
+	    (whitespace-mode)))
+
 
 ;; TREEMACS
 (use-package treemacs
@@ -238,7 +247,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
+   '(char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
 
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
@@ -246,3 +255,14 @@
   (message (buffer-file-name)))
 
 (global-set-key [C-f1] 'show-file-name) ; Or any other key you want
+
+
+;; Load pragmatapro-lig.el
+(add-to-list 'load-path "~/.emacs.d/prettyfonts")
+(require 'pragmatapro-lig)
+
+;; Enable pragmatapro-lig-mode for specific modes
+(add-hook 'text-mode-hook 'pragmatapro-lig-mode)
+(add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
+;; or globally
+;;(pragmatapro-lig-global-mode)
