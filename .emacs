@@ -38,7 +38,11 @@
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
+<<<<<<< Updated upstream
 (set-frame-font "PragmataPro Liga 19" nil t)
+=======
+(set-frame-font "JetBrains Mono 13" nil t)
+>>>>>>> Stashed changes
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
@@ -178,15 +182,6 @@
 ;; (add-hook 'python-mode-hook
 ;; 	  (lambda ()
 ;; 	    (whitespace-mode)))
-
-(use-package lsp-python-ms
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp)))
-  :init
-  (setq lsp-python-ms-executable "C:/Users/v.litvinov/Anaconda3/python.exe")
-  (setq lsp-python-ms-extra-paths "../bin;../uranium;../libCharon"))
 
 
 ;; TREEMACS
