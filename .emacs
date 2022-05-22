@@ -38,11 +38,7 @@
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
-<<<<<<< Updated upstream
 (set-frame-font "PragmataPro Liga 19" nil t)
-=======
-(set-frame-font "JetBrains Mono 13" nil t)
->>>>>>> Stashed changes
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
