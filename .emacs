@@ -188,13 +188,6 @@
   (setq lsp-python-ms-executable "C:/Users/v.litvinov/Anaconda3/python.exe")
   (setq lsp-python-ms-extra-paths "../bin;../uranium;../libCharon"))
 
-(add-hook 'js-jsx-mode-hook
-	  (lambda ()
-	    (whitespace-mode)))
-
-(add-hook 'javascript-mode-hook
-	  (lambda ()
-	    (whitespace-mode)))
 
 ;; TREEMACS
 (use-package treemacs
