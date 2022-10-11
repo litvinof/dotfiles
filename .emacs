@@ -55,6 +55,10 @@
 (blink-cursor-mode 0)
 
 
+(setq python-shell-interpreter "~/.pyenv/shims/python")
+(setq python-python-command "~/.pyenv/shims/python")
+
+
 ;; Modeline
 (use-package all-the-icons)
 (use-package doom-modeline
@@ -142,14 +146,23 @@
 (with-eval-after-load 'js
   (define-key js-mode-map (kbd "M-.") nil))
 
-(setq python-shell-interpreter "C:\\Users\\v.litvinov\\Anaconda3\\envs\\cura\\python.exe")
-(setq python-python-command "C:\\Users\\v.litvinov\\Anaconda3\\envs\\cura\\python.exe")
 
+;; (use-package lsp-python-ms
+;;   :ensure t
+;;   :config (progn
+;;             (setq-default lsp-python-ms-extra-paths
+;;                   '( "E:\\projects\\blade\\uranium" )))
+;;   :hook (python-mode . (lambda ()
+;;                          (require 'lsp-python-ms)
+;;                          (lsp)))
+;;   :init
+;;   (setq lsp-python-ms-auto-install-server t)
+;;   (setq lsp-python-ms-executable (executable-find "python-language-server"))
+;;   (setq lsp-python-ms-parse-dot-env-enabled t))
+
+(setq lsp-pyls-server-command '("/Users/slava/.local/bin/pyls"))
 (use-package lsp-python-ms
   :ensure t
-  :config (progn
-            (setq-default lsp-python-ms-extra-paths
-                  '( "E:\\projects\\blade\\uranium" )))
   :hook (python-mode . (lambda ()
                          (require 'lsp-python-ms)
                          (lsp)))
@@ -157,6 +170,8 @@
   (setq lsp-python-ms-auto-install-server t)
   (setq lsp-python-ms-executable (executable-find "python-language-server"))
   (setq lsp-python-ms-parse-dot-env-enabled t))
+
+
 
 (use-package lsp-ui :commands lsp-ui-mode :ensure t)
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
@@ -261,11 +276,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(flycheck-checker-error-threshold 2000)
- '(flycheck-python-flake8-executable "C:\\Users\\v.litvinov\\Anaconda3\\envs\\cura\\python.exe")
- '(flycheck-python-pycompile-executable "C:\\Users\\v.litvinov\\Anaconda3\\envs\\cura\\python.exe")
- '(flycheck-python-pylint-executable "C:\\Users\\v.litvinov\\Anaconda3\\envs\\cura\\python.exe")
+ '(flycheck-python-flake8-executable "~/.pyenv/shims/python")
+ '(flycheck-python-pycompile-executable "~/.pyenv/shims/python")
+ '(flycheck-python-pylint-executable "~/.pyenv/shims/python")
  '(package-selected-packages
-   '(ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
+   '(org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
 
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
