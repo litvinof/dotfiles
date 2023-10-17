@@ -28,8 +28,26 @@
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; fullscreen
 
 
-(use-package distinguished-theme :ensure)
-(load-theme 'distinguished t)
+;; THEMES
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable treemacs
+  (setq doom-themes-treemacs-theme "doom-earl-grey") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(load-theme 'doom-earl-grey t)
+
+;; (use-package distinguished-theme :ensure)
 ;;(use-package gruber-darker-theme :ensure)
 ;;(load-theme 'gruber-darker t)
 ;; Other themes
@@ -42,13 +60,13 @@
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
-;; - Essential PragmataPro 19
-;; - PragmataPro Liga
+;; - PragmataPro Liga 19
 ;; - Hack 16
-;; - JetBrains Mono 15
+;; - JetBrains Mono 17
 ;; - Cousine 17
-
-
+;; - Iosevka 17
+(use-package all-the-icons
+  :if (display-graphic-p))
 
 (setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark)))
 (setq ring-bell-function 'ignore)
@@ -102,28 +120,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cursor ((t (:background "#e2d62f"))))
- '(dired-directory ((t (:foreground "#b2c3cc" :weight bold))))
- '(flycheck-error ((t (:underline "Red1"))))
- '(flycheck-info ((t (:underline "ForestGreen"))))
- '(flycheck-warning ((t (:underline "DarkOrange"))))
- '(fringe ((t (:background "#181818" :foreground "#e4e4ef")))))
+ )
 
 (setq lsp-keymap-prefix "s-l")
 (setq lsp-prefer-flymake nil)
 (use-package lsp-mode
   :config
-  (lsp-register-custom-settings
-   '(("pyls.plugins.pyls_mypy.enabled" t t)
-     ("pyls.plugins.pyls_mypy.live_mode" nil t)
-     ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t)
-     ("pyls.plugins.flake8.enabled" t t)))
-
-  ;; Custom LSP settings
-  ;; (setq lsp-clients-python-library-directories "/Users/slava/.pyenv/shims/python")
-  ;; (setq lsp-pyls-server-command "/Users/slava/.pyenv/shims/pyls")
-  ;; (setq lsp-pyls-configuration-sources "/Users/slava/.pyenv/shims/pycodestyle")
 
   (setq lsp-clients-clangd-executable "/opt/homebrew/opt/llvm/bin/clangd")
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
@@ -136,8 +138,6 @@
 
   :commands lsp)
 
-(setq lsp-pyls-plugins-flake8-enabled t)
-
 (setq lsp-eldoc-enable-hover nil)
 (setq
     lsp-signature-auto-activate t
@@ -147,52 +147,30 @@
   (define-key js-mode-map (kbd "M-.") nil))
 
 
-;; (use-package lsp-python-ms
-;;   :ensure t
-;;   :config (progn
-;;             (setq-default lsp-python-ms-extra-paths
-;;                   '( "E:\\projects\\blade\\uranium" )))
-;;   :hook (python-mode . (lambda ()
-;;                          (require 'lsp-python-ms)
-;;                          (lsp)))
-;;   :init
-;;   (setq lsp-python-ms-auto-install-server t)
-;;   (setq lsp-python-ms-executable (executable-find "python-language-server"))
-;;   (setq lsp-python-ms-parse-dot-env-enabled t))
-
-(setq lsp-pyls-server-command '("/Users/slava/.local/bin/pyls"))
-(use-package lsp-python-ms
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp)))
-  :init
-  (setq lsp-python-ms-auto-install-server t)
-  (setq lsp-python-ms-executable (executable-find "python-language-server"))
-  (setq lsp-python-ms-parse-dot-env-enabled t))
-
-
-
 (use-package lsp-ui :commands lsp-ui-mode :ensure t)
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package company)
-(use-package flycheck-pycheckers
-  :load-path "C:\\Users\\v.litvinov\\flycheck-pycheckers\\")
-;;(use-package flymake)
+(use-package flycheck-pycheckers)
 (use-package format-all)
 (use-package which-key)
 (use-package lsp-docker)
 (use-package flycheck)
 (use-package yaml-mode)
 (use-package dockerfile-mode)
-;; (use-package lsp-python-ms)
 
+
+;; SCHEME
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (set (make-local-variable 'compile-command)
+                 (concat "chez --script " buffer-file-name))))
 
 ;; PYTHON
-;; (setq python-shell-interpreter "/Users/slava/.pyenv/shims/python")
-;; (add-hook 'python-mode-hook
-;; 	  (lambda ()
-;; 	    (whitespace-mode)))
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
 
 
 ;; TREEMACS
@@ -280,7 +258,9 @@
  '(flycheck-python-pycompile-executable "~/.pyenv/shims/python")
  '(flycheck-python-pylint-executable "~/.pyenv/shims/python")
  '(package-selected-packages
-   '(org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all flycheck-pycheckers espresso-theme doom-modeline dockerfile-mode company-lsp)))
+   '(typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
+ '(warning-suppress-log-types '((lsp-mode) (lsp-mode)))
+ '(warning-suppress-types '((lsp-mode))))
 
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
@@ -299,9 +279,15 @@
 (add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
 ;; or globally
 ;;(pragmatapro-lig-global-mode)
-
+;; (add-to-list 'load-path "~/.emacs.d/prettyfonts/iosevka.el")
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 (put 'downcase-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
+
+
+;; Load moving lines up or down
+(add-to-list 'load-path "~/dotfiles")
+(require 'move-lines)

@@ -78,10 +78,10 @@
 
 
  # open iterm
- cmd - return : open -na /Users/slava/kitty/kitty.app
+ cmd - return : open -na /Applications/kitty.app
 
  # open vscode
- cmd + shift - return : emacs &
+ cmd + shift - return : open -na /Applications/Emacs.app
 
  # focus window
  alt - h : yabai -m window --focus west
