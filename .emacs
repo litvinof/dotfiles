@@ -8,6 +8,7 @@
 (setq use-package-always-ensure t)
 
 
+(menu-bar-mode t)
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 (setq inhibit-startup-screen t)
@@ -220,7 +221,7 @@
           treemacs-tag-follow-delay              0
           treemacs-user-mode-line-format         nil
           treemacs-user-header-line-format       nil
-          treemacs-width                         35
+          treemacs-width                         25
           treemacs-workspace-switch-cleanup      nil)
 
     ;; The default width and height of the icons is 22 pixels. If you are
@@ -257,10 +258,13 @@
  '(flycheck-python-flake8-executable "~/.pyenv/shims/python")
  '(flycheck-python-pycompile-executable "~/.pyenv/shims/python")
  '(flycheck-python-pylint-executable "~/.pyenv/shims/python")
+ '(org-agenda-files '("/Users/slava/Dropbox/notes/journal"))
+ '(org-agenda-window-setup 'current-window)
+ '(org-export-backends '(ascii html icalendar latex md))
  '(package-selected-packages
-   '(typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
+   '(org-gcal typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
  '(warning-suppress-log-types '((lsp-mode) (lsp-mode)))
- '(warning-suppress-types '((lsp-mode))))
+ '(warning-suppress-types '((emacs) (lsp-mode))))
 
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
@@ -289,5 +293,12 @@
 
 
 ;; Load moving lines up or down
-(add-to-list 'load-path "~/dotfiles")
-(require 'move-lines)
+(load "/Users/slava/dotfiles/move-lines.el")
+
+;; ORG stuff
+(load "/Users/slava/dotfiles/orgstuff.el")
+
+
+;; Vertically split by default
+(setq split-width-threshold 0)
+(setq split-height-threshold nil)
