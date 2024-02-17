@@ -7,6 +7,15 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Install from sources
+(use-package quelpa
+  :ensure)
+
+(use-package quelpa-use-package
+  :demand
+  :config
+  (quelpa-use-package-activate-advice))
+
 
 (menu-bar-mode t)
 (tool-bar-mode -1)
@@ -22,10 +31,10 @@
 
 
 ;; Position on startup
-(add-to-list 'default-frame-alist '(left   . 200))
+(add-to-list 'default-frame-alist '(left   . 180))
 (add-to-list 'default-frame-alist '(top    . 100))
-(add-to-list 'default-frame-alist '(height . 55))
-(add-to-list 'default-frame-alist '(width  . 160))
+(add-to-list 'default-frame-alist '(height . 60))
+(add-to-list 'default-frame-alist '(width  . 220))
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; fullscreen
 
 
@@ -57,7 +66,7 @@
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
-(set-frame-font "PragmataPro Liga 19" nil t)
+(set-frame-font "Fira Code 17" nil t)
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19
@@ -121,7 +130,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(whitespace-newline ((t (:foreground "gray93"))))
+ '(whitespace-space ((t (:foreground "gray93"))))
+ '(whitespace-tab ((t (:foreground "gray93")))))
 
 (setq lsp-keymap-prefix "s-l")
 (setq lsp-prefer-flymake nil)
@@ -221,7 +232,7 @@
           treemacs-tag-follow-delay              0
           treemacs-user-mode-line-format         nil
           treemacs-user-header-line-format       nil
-          treemacs-width                         25
+          treemacs-width                         40
           treemacs-workspace-switch-cleanup      nil)
 
     ;; The default width and height of the icons is 22 pixels. If you are
@@ -262,7 +273,7 @@
  '(org-agenda-window-setup 'current-window)
  '(org-export-backends '(ascii html icalendar latex md))
  '(package-selected-packages
-   '(org-gcal typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
+   '(lsp-yaml k8s-mode ligature copilot editorconfig org-gcal typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
  '(warning-suppress-log-types '((lsp-mode) (lsp-mode)))
  '(warning-suppress-types '((emacs) (lsp-mode))))
 
@@ -279,11 +290,34 @@
 (require 'pragmatapro-lig)
 
 ;; Enable pragmatapro-lig-mode for specific modes
-(add-hook 'text-mode-hook 'pragmatapro-lig-mode)
-(add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
+;; (add-hook 'text-mode-hook 'pragmatapro-lig-mode)
+;; (add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
 ;; or globally
+
 ;;(pragmatapro-lig-global-mode)
 ;; (add-to-list 'load-path "~/.emacs.d/prettyfonts/iosevka.el")
+
+;; Enable ligatures for Fira Code
+(use-package ligature
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 't '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+                                     ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+                                     "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+                                     "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+                                     "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+                                     "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+                                     "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+                                     "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+                                     "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+                                     "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -302,3 +336,33 @@
 ;; Vertically split by default
 (setq split-width-threshold 0)
 (setq split-height-threshold nil)
+
+;; Copilot
+(use-package copilot
+  :quelpa (copilot :fetcher github
+                   :repo "copilot-emacs/copilot.el"
+                   :branch "main"
+                   :files ("dist" "*.el")))
+(add-hook 'yaml-mode-hook 'copilot-mode)
+(add-hook 'prog-mode-hook 'copilot-mode)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+
+;; White space for yaml
+(add-hook 'yaml-mode-hook 'whitespace-mode)
+
+
+
+;; Kubernetes
+(add-to-list 'load-path
+              "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+(use-package k8s-mode
+  :ensure t
+  :hook (k8s-mode . yas-minor-mode))
+;; The site docs URL
+(setq k8s-site-docs-url "https://kubernetes.io/docs/reference/generated/kubernetes-api/")
+(add-hook 'yaml-mode-hook 'lsp)
+(add-hook 'yaml-mode-hook 'k8s-mode)
+
