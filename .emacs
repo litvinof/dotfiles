@@ -21,7 +21,8 @@
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 (setq inhibit-startup-screen t)
-(setq split-width-threshold nil) ;; split vertically by default
+;; (setq split-width-threshold nil) ;; split vertically by default
+(setq split-width-threshold 300) ;; split vertically by default
 (show-paren-mode 1) ;; show parentheses pairs
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 ;; (setq display-line-numbers-type nil)
@@ -130,6 +131,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(markdown-code-face ((t (:extend t :background "gray91" :foreground "#886A44"))))
  '(whitespace-newline ((t (:foreground "gray93"))))
  '(whitespace-space ((t (:foreground "gray93"))))
  '(whitespace-tab ((t (:foreground "gray93")))))
@@ -364,5 +366,3 @@
 ;; The site docs URL
 (setq k8s-site-docs-url "https://kubernetes.io/docs/reference/generated/kubernetes-api/")
 (add-hook 'yaml-mode-hook 'lsp)
-(add-hook 'yaml-mode-hook 'k8s-mode)
-
