@@ -1,4 +1,5 @@
 (package-initialize)
+
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
@@ -24,7 +25,7 @@
 ;; (setq split-width-threshold nil) ;; split vertically by default
 (setq split-width-threshold 300) ;; split vertically by default
 (show-paren-mode 1) ;; show parentheses pairs
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+;; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 ;; (setq display-line-numbers-type nil)
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (setq-default truncate-lines 0)
@@ -275,7 +276,7 @@
  '(org-agenda-window-setup 'current-window)
  '(org-export-backends '(ascii html icalendar latex md))
  '(package-selected-packages
-   '(lsp-yaml k8s-mode ligature copilot editorconfig org-gcal typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
+   '(dap-cpptools dap-mode smart-compile lsp-yaml k8s-mode ligature copilot editorconfig typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
  '(warning-suppress-log-types '((lsp-mode) (lsp-mode)))
  '(warning-suppress-types '((emacs) (lsp-mode))))
 
@@ -334,6 +335,8 @@
 ;; ORG stuff
 (load "/Users/slava/dotfiles/orgstuff.el")
 
+;; Compile window
+(load "/Users/slava/dotfiles/compile-window.el")
 
 ;; Vertically split by default
 (setq split-width-threshold 0)
@@ -346,23 +349,54 @@
                    :branch "main"
                    :files ("dist" "*.el")))
 (add-hook 'yaml-mode-hook 'copilot-mode)
+(add-hook 'c++-mode-hook 'copilot-mode)
 (add-hook 'prog-mode-hook 'copilot-mode)
 (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
 (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+
+
 
 ;; White space for yaml
 (add-hook 'yaml-mode-hook 'whitespace-mode)
 
 
-
-;; Kubernetes
-(add-to-list 'load-path
-              "~/.emacs.d/plugins/yasnippet")
-(require 'yasnippet)
-(yas-global-mode 1)
-(use-package k8s-mode
-  :ensure t
-  :hook (k8s-mode . yas-minor-mode))
-;; The site docs URL
-(setq k8s-site-docs-url "https://kubernetes.io/docs/reference/generated/kubernetes-api/")
 (add-hook 'yaml-mode-hook 'lsp)
+
+(use-package smart-compile)
+(require 'compile)
+(setq compilation-last-buffer nil)
+;; save all modified buffers without asking before compilation
+(setq compilation-ask-about-save nil)
+(defun compile-again (ARG)
+  "Run the same compile as the last time.
+
+With a prefix argument or no last time, this acts like M-x compile,
+and you can reconfigure the compile args."
+  (interactive "p")
+  ;; the following two lines create bug: split a new window every time
+  ;; (if (not (get-buffer-window "*compilation*"))
+  ;;      (split-window-below))
+  (if (and (eq ARG 1) compilation-last-buffer)
+      (recompile)
+    (call-interactively 'smart-compile)))
+(bind-key* "C-x C-m" 'compile-again)
+;; create a new small frame to show the compilation info
+;; will be auto closed if no error
+(setq special-display-buffer-names
+      `(("*compilation*" . ((name . "*compilation*")
+                            ,@default-frame-alist
+                            ;; (left . (- 1))
+                            (top . 0)))))
+(setq compilation-finish-functions
+      (lambda (buf str)
+        (if (null (string-match ".*exited abnormally.*" str))
+            ;;no errors, make the compilation window go away in a few seconds
+            (progn
+              (run-at-time
+               "1 sec" nil 'delete-windows-on
+               (get-buffer-create "*compilation*"))
+              (message "No Compilation Errors!")))))
+
+(use-package dap-mode)
+(require 'dap-cpptools)
+(require 'dap-gdb-lldb)
