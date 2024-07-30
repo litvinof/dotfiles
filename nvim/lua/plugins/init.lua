@@ -109,5 +109,8 @@ return {
     {
         "gbprod/substitute.nvim",
         event = { "BufReadPre", "BufNewFile" },
+    },
+    {
+        "theprimeagen/harpoon"
     }
 }

@@ -1,5 +1,5 @@
 vim.opt.guicursor = ""
-
+vim.wo.wrap = false
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
@@ -37,3 +37,9 @@ vim.opt.cursorline = true
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+vim.api.nvim_create_user_command("Cppath", function()
+    local path = vim.fn.expand("%:p")
+    vim.fn.setreg("+", path)
+    vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
