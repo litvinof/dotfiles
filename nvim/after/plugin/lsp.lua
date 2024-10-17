@@ -12,11 +12,9 @@ require('mason').setup({
 require('mason-lspconfig').setup({
     -- Available servers: https://github.com/williamboman/mason-lspconfig.nvim?tab=readme-ov-file#available-lsp-servers
     ensure_installed = {
-        'tsserver',
         'eslint',
         'rust_analyzer',
         'pylsp',
-        'pyright',
         'dockerls',
         'docker_compose_language_service',
         'bashls',
@@ -27,6 +25,8 @@ require('mason-lspconfig').setup({
         'yamlls',
         'helm_ls',
         'clangd',
+        'ts_ls',
+        'pyright'
     },
     handlers = {
         function(server_name)
@@ -76,6 +76,7 @@ lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr, remap = false }
 
+    vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, { noremap = true, silent = true })
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
@@ -87,3 +88,21 @@ lsp_zero.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+require('lspconfig')['pylsp'].setup {
+  before_init = function(params)
+    params.processId = vim.NIL
+  end,
+  cmd = {
+    'docker',
+    'run',
+    '-i',
+    '--name',
+    'pylsp-empto-backend',
+    '--rm',
+    '-v',
+    '/Users/viacheslav.litvinov/projects/empto/backend:/src',
+    'empto_backend:latest',
+    'pylsp'
+  }
+}
