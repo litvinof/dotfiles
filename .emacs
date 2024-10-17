@@ -23,7 +23,7 @@
 (toggle-scroll-bar -1)
 (setq inhibit-startup-screen t)
 ;; (setq split-width-threshold nil) ;; split vertically by default
-(setq split-width-threshold 300) ;; split vertically by default
+;; (setq split-width-threshold 300) ;; split vertically by default
 (show-paren-mode 1) ;; show parentheses pairs
 ;; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 ;; (setq display-line-numbers-type nil)
@@ -36,7 +36,7 @@
 (add-to-list 'default-frame-alist '(left   . 180))
 (add-to-list 'default-frame-alist '(top    . 100))
 (add-to-list 'default-frame-alist '(height . 60))
-(add-to-list 'default-frame-alist '(width  . 220))
+(add-to-list 'default-frame-alist '(width  . 170))
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; fullscreen
 
 
@@ -137,6 +137,11 @@
  '(whitespace-space ((t (:foreground "gray93"))))
  '(whitespace-tab ((t (:foreground "gray93")))))
 
+(use-package typescript-mode
+  :after lsp-mode
+  :mode ("\.ts$")
+  :hook (typescript-mode . lsp-deferred))
+
 (setq lsp-keymap-prefix "s-l")
 (setq lsp-prefer-flymake nil)
 (use-package lsp-mode
@@ -149,9 +154,10 @@
 	 (c-mode . lsp)
 	 (python-mode . lsp)
 	 (js-mode . lsp)
-	 (js-jsx-mode . lsp))
-
+	 (js-jsx-mode . lsp)
+  	 (typescript-mode . lsp))
   :commands lsp)
+
 
 (setq lsp-eldoc-enable-hover nil)
 (setq
@@ -277,7 +283,7 @@
  '(org-export-backends '(ascii html icalendar latex md))
  '(package-selected-packages
    '(dap-cpptools dap-mode smart-compile lsp-yaml k8s-mode ligature copilot editorconfig typescript-mode org-mode ag char-menu rjsx-mode magit company lsp-treemacs distinguished-theme lsp-docker which-key yaml-mode use-package modus-vivendi-theme minimal-theme lsp-ui lsp-ivy helm-themes helm-lsp helm-ag format-all espresso-theme doom-modeline dockerfile-mode company-lsp))
- '(warning-suppress-log-types '((lsp-mode) (lsp-mode)))
+ '(warning-suppress-log-types '(((copilot copilot-no-mode-indent)) (lsp-mode) (lsp-mode)))
  '(warning-suppress-types '((emacs) (lsp-mode))))
 
 (defun show-file-name ()
@@ -333,7 +339,7 @@
 (load "/Users/slava/dotfiles/move-lines.el")
 
 ;; ORG stuff
-(load "/Users/slava/dotfiles/orgstuff.el")
+;; (load "/Users/slava/dotfiles/orgstuff.el")
 
 ;; Compile window
 (load "/Users/slava/dotfiles/compile-window.el")
@@ -353,7 +359,10 @@
 (add-hook 'prog-mode-hook 'copilot-mode)
 (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
 (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-
+(add-to-list
+ 'copilot-indentation-alist
+ '(go-mode 4)
+ '(prog-mode 4))
 
 
 ;; White space for yaml
@@ -400,3 +409,29 @@ and you can reconfigure the compile args."
 (use-package dap-mode)
 (require 'dap-cpptools)
 (require 'dap-gdb-lldb)
+
+;; https://stackoverflow.com/a/1511827/5745120
+(defun which-active-modes ()
+  "Which minor modes are enabled in the current buffer."
+  (let ((active-modes))
+    (mapc (lambda (mode) (condition-case nil
+                        (if (and (symbolp mode) (symbol-value mode))
+                            (add-to-list 'active-modes mode))
+                      (error nil) ))
+          minor-mode-list)
+    active-modes))
+
+(defun pop-up-frames-switch-to-buffer (buffer alist)
+  "Pop up frames switch to buffer command."
+  (member 'pop-up-frames-mode (which-active-modes)))
+
+(setq display-buffer-alist
+      (append display-buffer-alist
+      '((pop-up-frames-switch-to-buffer . ((display-buffer-reuse-window display-buffer-pop-up-frame) . ((reusable-frames . 0)))
+))))
+
+(define-minor-mode pop-up-frames-mode
+  "Pop up frames minor mode"
+  :lighter " PUF")
+
+(provide 'pop-up-frames-mode)
