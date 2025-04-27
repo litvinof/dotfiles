@@ -89,20 +89,20 @@ lsp_zero.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
-require('lspconfig')['pylsp'].setup {
-  before_init = function(params)
-    params.processId = vim.NIL
-  end,
-  cmd = {
-    'docker',
-    'run',
-    '-i',
-    '--name',
-    'pylsp-empto-backend',
-    '--rm',
-    '-v',
-    '/Users/viacheslav.litvinov/projects/empto/backend:/src',
-    'empto_backend:latest',
-    'pylsp'
-  }
-}
+-- require('lspconfig')['pylsp'].setup {
+--   before_init = function(params)
+--     params.processId = vim.NIL
+--   end,
+--   cmd = {
+--     'docker',
+--     'run',
+--     '-i',
+--     '--name',
+--     'pylsp-empto-backend',
+--     '--rm',
+--     '-v',
+--     '/Users/viacheslav.litvinov/projects/empto/backend:/src',
+--     'empto_backend:latest',
+--     'pylsp'
+--   }
+-- }

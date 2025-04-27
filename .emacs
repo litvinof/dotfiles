@@ -25,7 +25,7 @@
 ;; (setq split-width-threshold nil) ;; split vertically by default
 ;; (setq split-width-threshold 300) ;; split vertically by default
 (show-paren-mode 1) ;; show parentheses pairs
-;; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 ;; (setq display-line-numbers-type nil)
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (setq-default truncate-lines 0)
@@ -33,11 +33,30 @@
 
 
 ;; Position on startup
-(add-to-list 'default-frame-alist '(left   . 180))
-(add-to-list 'default-frame-alist '(top    . 100))
-(add-to-list 'default-frame-alist '(height . 60))
-(add-to-list 'default-frame-alist '(width  . 170))
+;; (add-to-list 'default-frame-alist '(left   . 180))
+;; (add-to-list 'default-frame-alist '(top    . 100))
+;; (add-to-list 'default-frame-alist '(height . 60))
+;; (add-to-list 'default-frame-alist '(width  . 170))
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; fullscreen
+
+;; (setq default-frame-alist
+;;       '((top . 0)
+;;         (left . 0)
+;;         (width . 80) 
+;;         (height . 24)
+;;         (unsplittable . nil)))
+
+;; (setq initial-frame-alist
+;;       '((top . 0)
+;;         (left . 0)
+;;         (width . 80)
+;;         (height . 24)
+;;         (unsplittable . nil)))
+;; (make-frame-on-display (getenv "DISPLAY"))
+;; (setq display-buffer-alist
+;;       '(("." (display-buffer-same-window))))
+
+
 
 
 ;; THEMES
@@ -68,7 +87,7 @@
 ;; - gruber-darker (gruber-darker)
 ;; - distinguished-theme (distinguished)
 
-(set-frame-font "Fira Code 17" nil t)
+(set-frame-font "Fira Code 15" nil t)
 ;; Other fonts
 ;; - Ubuntu Mono 18
 ;; - PragmataPro 19

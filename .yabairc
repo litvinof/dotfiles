@@ -48,6 +48,16 @@ yabai -m config left_padding                 5
 yabai -m config right_padding                5
 yabai -m config window_gap                   5
 
-yabai -m rule --add app=/System/Volumes/Data/Applications/Emacs.app manage=on
+#yabai -m rule --add app=/System/Volumes/Data/Applications/Emacs.app manage=on
+yabai -m rule --add app="Emacs" role="AXTextField" subrole="AXStandardWindow" manage=on
+
+# for this to work you must configure sudo such that
+# it will be able to run the command without password
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+yabai -m signal --add app='^Ghostty$' event=window_created action='yabai -m space --layout bsp'
+yabai -m signal --add app='^Ghostty$' event=window_destroyed action='yabai -m space --layout bsp'
 
 echo "yabai configuration loaded.."
