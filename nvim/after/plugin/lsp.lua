@@ -14,7 +14,7 @@ require('mason-lspconfig').setup({
     ensure_installed = {
         'eslint',
         'rust_analyzer',
-        'pylsp',
+        -- 'pylsp',
         'dockerls',
         'docker_compose_language_service',
         'bashls',
