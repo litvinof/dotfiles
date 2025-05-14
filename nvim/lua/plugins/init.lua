@@ -97,7 +97,10 @@ return {
         opts = {
             options = {
                 mode = "tabs",
-                separator_style = "slant"
+                separator_style = "thin",
+                indicator = {
+                    style = 'underline',
+                },
             }
         }
     },
