@@ -20,6 +20,10 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>f", function()
     vim.lsp.buf.format()
 end)
+-- Format only visually selected text
+vim.keymap.set("v", "<leader>f", function()
+    vim.lsp.buf.format({ async = true })
+end)
 
 -- TODO: get more idea about "quick fix" navigation
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
