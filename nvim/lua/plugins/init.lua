@@ -130,5 +130,8 @@ return {
     },
     {
         "theprimeagen/harpoon"
+    },
+    {
+       "sindrets/diffview.nvim"  
     }
 }

@@ -52,6 +52,8 @@ vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current bu
 
 -- open neogit
 vim.keymap.set("n", "<leader>g", "<cmd>Neogit kind=vsplit<CR>")
+-- open diffview
+vim.keymap.set("n", "<leader>d", "<cmd>DiffviewFileHistory<CR>")
 
 
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/dotfiles/mf<CR>")
