@@ -14,7 +14,7 @@ require('mason-lspconfig').setup({
     ensure_installed = {
         'eslint',
         'rust_analyzer',
-        -- 'pylsp',
+        'pylsp',
         'dockerls',
         'docker_compose_language_service',
         'bashls',
@@ -42,6 +42,7 @@ cmp.setup({
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
+
     },
     mapping = cmp.mapping.preset.insert({
         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
@@ -88,6 +89,7 @@ lsp_zero.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
 
 -- require('lspconfig')['pylsp'].setup {
 --   before_init = function(params)
