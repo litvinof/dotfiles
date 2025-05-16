@@ -1,0 +1,11 @@
+-- require('venv-selector').setup({
+--     opts = {
+--         name = "env",
+--         stay_on_this_version = "true"
+--     },
+--     event = 'VeryLazy',     -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+--     keys = {
+--         { '<leader>vs', '<cmd>VenvSelect<cr>' },
+--         { '<leader>vc', '<cmd>VenvSelectCached<cr>' },
+--     },
+-- })

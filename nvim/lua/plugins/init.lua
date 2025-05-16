@@ -1,26 +1,10 @@
 return {
-    --"EdenEast/nightfox.nvim",
-    --{ "rose-pine/neovim", name = "rose-pine" },
-    { "savq/melange-nvim" }, -- The golden theme
+    { "savq/melange-nvim" },       -- The golden theme
     {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.8',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-        config = function()
-            require('telescope').setup({
-                pickers = {
-                    find_files = {
-                        hidden = true,
-                    }
-                },
-                defaults = { 
-                    file_ignore_patterns = {
-                        "node_modules",
-                        ".git"
-                    } 
-                }
-            })
-        end
+        "nvim-telescope/telescope.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim"
+        },
     },
     {
         "NeogitOrg/neogit",
@@ -37,48 +21,20 @@ return {
         "nvim-treesitter/playground",
         build = ":TSUpdate"
     },
-    { 'williamboman/mason.nvim' },
-    { 'williamboman/mason-lspconfig.nvim' },
-    { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
-    { 'neovim/nvim-lspconfig' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/nvim-cmp' },
-    { 'L3MON4D3/LuaSnip' },
+    {
+        "mason-org/mason.nvim",
+        dependencies = {
+            "williamboman/mason-lspconfig",
+        },
+    },
+    { "neovim/nvim-lspconfig" },
+    { "rsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/nvim-cmp" },
+    { "L3MON4D3/LuaSnip" },
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                {
-                    suggestion = { enabled = false },
-                    panel = { enabled = false },
-                }
-            })
-        end,
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        config = function()
-            require("copilot_cmp").setup()
-        end
-    },
-    {
-        'linux-cultist/venv-selector.nvim',
-        dependencies = { 'neovim/nvim-lspconfig', 'nvim-telescope/telescope.nvim', 'mfussenegger/nvim-dap-python' },
-        opts = {
-            -- Your options go here
-            name = "env",
-            stay_on_this_version = "true"
-            -- auto_refresh = false
-        },
-        event = 'VeryLazy', -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
-        keys = {
-            -- Keymap to open VenvSelector to pick a venv.
-            { '<leader>vs', '<cmd>VenvSelect<cr>' },
-            -- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
-            { '<leader>vc', '<cmd>VenvSelectCached<cr>' },
-        },
     },
     {
         "folke/which-key.nvim",
@@ -87,13 +43,12 @@ return {
             vim.o.timeout = true
             vim.o.timeoutlen = 500
         end,
-        opts = {
-        }
     },
     {
         "akinsho/bufferline.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        version = "*",
+        dependencies = { 
+            "nvim-tree/nvim-web-devicons" 
+        },
         opts = {
             options = {
                 mode = "tabs",
@@ -132,6 +87,14 @@ return {
         "theprimeagen/harpoon"
     },
     {
-       "sindrets/diffview.nvim"  
+        "sindrets/diffview.nvim"
+    },
+    {
+        "saghen/blink.cmp",
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+            "giuxtaposition/blink-cmp-copilot",
+            "hrsh7th/cmp-nvim-lsp"
+        },
     }
 }
