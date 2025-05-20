@@ -8,6 +8,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         bufmap('n', 'K', "<cmd>lua vim.lsp.buf.hover({ border = 'rounded' })<cr>")
         bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+        bufmap("n", "gt", "<cmd>tab split | lua vim.lsp.buf.definition()<CR>", {})
         bufmap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
         bufmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
         bufmap('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
