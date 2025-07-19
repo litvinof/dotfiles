@@ -1,5 +1,5 @@
 return {
-    { "savq/melange-nvim" },       -- The golden theme
+    { "savq/melange-nvim" }, -- The golden theme
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {
@@ -46,8 +46,8 @@ return {
     },
     {
         "akinsho/bufferline.nvim",
-        dependencies = { 
-            "nvim-tree/nvim-web-devicons" 
+        dependencies = {
+            "nvim-tree/nvim-web-devicons"
         },
         opts = {
             options = {
@@ -96,5 +96,10 @@ return {
             "giuxtaposition/blink-cmp-copilot",
             "hrsh7th/cmp-nvim-lsp"
         },
+        version = '1.*'
+    },
+    {
+        'blacklight/nvim-http'
     }
+
 }
