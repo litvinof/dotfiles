@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         bufmap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
         bufmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
         bufmap('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
-        bufmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
+        -- bufmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
         bufmap('n', 'gs', "<cmd>lua vim.lsp.buf.signature_help({ border = 'rounded' })<cr>")
         bufmap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<cr>')
         -- bufmap('n', '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>')
@@ -55,3 +55,11 @@ vim.diagnostic.config({
         source = 'always',
     },
 })
+
+vim.keymap.set("n", "gr", function()
+  require("telescope.builtin").lsp_references({
+    layout_strategy = "vertical",
+    layout_config = { width = 0.9 },
+    show_line = false, -- don't show the whole line in the list
+  })
+end, { desc = "LSP References (Telescope)" })
