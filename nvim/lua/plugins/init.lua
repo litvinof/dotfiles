@@ -99,7 +99,8 @@ return {
         version = '1.*'
     },
     {
-        'blacklight/nvim-http'
+        'litvinof/nvim-http',
+        branch = 'fix/macos-symlink',
     }
 
 }
