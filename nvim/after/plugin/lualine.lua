@@ -4,9 +4,21 @@ local lazy_status = require("lazy.status")     -- to configure lazy pending upda
 -- configure lualine with modified theme
 lualine.setup({
     options = {
-        theme = 'melange',
+        -- theme = 'melange',
+        theme = 'auto',
+        icons_enabled = true,
+        jomponent_separators = { left = '', right = ''},
+        section_separators = { left = '', right = ''},
     },
     sections = {
+        lualine_a = {
+            {
+                'mode',
+                fmt = function(str)
+                    return str:sub(1, 1) -- shorten mode to first letter
+                end,
+            },
+        },
         lualine_c = {
             {
                 'filename',
@@ -21,8 +33,9 @@ lualine.setup({
                 -- color = { fg = "#ff9e64" },
             },
             { "encoding" },
-            { "fileformat" },
+            -- { "fileformat" },
             { "filetype" },
         },
     },
+
 })

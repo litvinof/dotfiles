@@ -49,6 +49,10 @@ vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current t
 vim.keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
 vim.keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+vim.keymap.set("n", "<leader>bn", "<cmd>bn<CR>", { desc = "Go to next buffer" }) --  go to next tab
+vim.keymap.set("n", "<leader>bp", "<cmd>bp<CR>", { desc = "Go to previous buffer" }) --  go to previous tab
+
+
 
 -- open neogit
 vim.keymap.set("n", "<leader>g", "<cmd>Neogit kind=vsplit<CR>")
