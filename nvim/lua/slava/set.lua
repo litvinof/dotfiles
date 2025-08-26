@@ -7,6 +7,7 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+vim.opt.showtabline = 1
 
 vim.opt.smartindent = true
 
@@ -43,3 +44,17 @@ vim.api.nvim_create_user_command("Cppath", function()
     vim.fn.setreg("+", path)
     vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
+
+vim.api.nvim_create_augroup("SearchHighlight", {})
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+  pattern = {"/", "?"}, -- when entering search
+  callback = function()
+    vim.o.hlsearch = true
+  end,
+})
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  pattern = {"/", "?"}, -- when leaving search
+  callback = function()
+    vim.o.hlsearch = false
+  end,
+})

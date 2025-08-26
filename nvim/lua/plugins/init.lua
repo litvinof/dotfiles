@@ -51,6 +51,7 @@ return {
         },
         opts = {
             options = {
+                always_show_bufferline=false,
                 mode = "tabs",
                 separator_style = "thin",
                 indicator = {
