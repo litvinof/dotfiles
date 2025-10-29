@@ -1,5 +1,6 @@
 return {
     { "savq/melange-nvim" }, -- The golden theme
+    { "cocopon/iceberg.vim" }, -- The blue theme
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {

@@ -61,3 +61,35 @@ vim.keymap.set("n", "<leader>d", "<cmd>DiffviewFileHistory<CR>")
 
 
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/dotfiles/mf<CR>")
+
+-- Function to put the visually selected text into the search bar
+local function put_visual_selection_in_search_bar()
+    -- Save the current register contents
+    local saved_reg = vim.fn.getreg('"')
+    local saved_regtype = vim.fn.getregtype('"')
+
+    -- Yank the visual selection into the unnamed register
+    vim.cmd('normal! ""y')
+
+    -- Get the selected text
+    local text = vim.fn.getreg('"')
+
+    -- Restore the old register contents
+    vim.fn.setreg('"', saved_reg, saved_regtype)
+
+    -- Remove newlines and escape special chars
+    text = text:gsub("\n", "\\n")
+    text = vim.fn.escape(text, [[\/]])
+
+    if text == nil or text == '' then
+        print("No visual selection")
+        return
+    end
+
+    -- Feed '/' + text into command line without executing
+    vim.api.nvim_feedkeys('/' .. text, 'n', false)
+end
+
+-- Create command and optional keymap
+vim.api.nvim_create_user_command('SearchPromptVisual', put_visual_selection_in_search_bar, {})
+vim.keymap.set('v', '<leader>a', put_visual_selection_in_search_bar, { noremap = true, silent = true })

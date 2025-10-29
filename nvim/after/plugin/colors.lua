@@ -1,5 +1,5 @@
-function ColorItBaby(color) 
-	-- color = color or "rose-pine"
+function ColorItBaby(color)
+	-- color = color or "iceberg"
 	color = color or "melange"
 	-- color = color or "gruber-darker"
 	vim.cmd.colorscheme(color)

@@ -16,8 +16,8 @@ keybind = ctrl+z=close_surface
 #keybind = ctrl+d=new_split:right
 
 # Empty values reset the configuration to the default value
-font-family = "Fira Code"
-font-size = 16
+font-family = "Fira Code Retina"
+font-size = 17
 adjust-cell-width = "-15%"
 macos-option-as-alt = true
 cursor-color = fefb51
