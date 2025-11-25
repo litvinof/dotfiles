@@ -93,3 +93,10 @@ end
 -- Create command and optional keymap
 vim.api.nvim_create_user_command('SearchPromptVisual', put_visual_selection_in_search_bar, {})
 vim.keymap.set('v', '<leader>a', put_visual_selection_in_search_bar, { noremap = true, silent = true })
+
+
+vim.api.nvim_create_user_command("Ruff", function()
+  local cmd = "uv run ruff check ."
+  vim.fn.setqflist({}, " ", { title = "Ruff", lines = vim.fn.systemlist(cmd) })
+  vim.cmd("copen")
+end, {})
