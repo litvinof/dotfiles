@@ -7,23 +7,19 @@
 # background = 000000
 # foreground = ffffff
 
-background = 242424 
+background = 181818 
 foreground = e4e4ef
 
 # background-opacity = 0.8
 background-blur-radius = 40
-
-
-# Comments start with a `#` and are only valid on their own line.
-# Blank lines are ignored!
 
 keybind = ctrl+z=close_surface
 #keybind = ctrl+d=new_split:right
 
 # Empty values reset the configuration to the default value
 font-family = "Iosevka Term"
-font-size = 20 
-# adjust-cell-width = "-5%"
+font-size = 19 
+adjust-cell-width = "-5%"
 macos-option-as-alt = true
 cursor-color = fefb51
 shell-integration-features = no-cursor
