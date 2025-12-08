@@ -34,7 +34,7 @@ vim.g.mapleader = " "
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
