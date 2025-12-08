@@ -10,7 +10,7 @@
 background = 181818 
 foreground = e4e4ef
 
-# background-opacity = 0.8
+background-opacity = 0.9
 background-blur-radius = 40
 
 keybind = ctrl+z=close_surface
