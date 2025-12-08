@@ -40,6 +40,10 @@ local icons = {
       disconnected = "􀙈",
       router = "􁓤",
     },
+    ethernet = {
+      connected = "󰈁",
+      disconnected = "󰌙",
+    },
     media = {
       back = "􀊊",
       forward = "􀊌",
@@ -81,6 +85,10 @@ local icons = {
       connected = "󰖩",
       disconnected = "󰖪",
       router = "Missing Icon"
+    },
+    ethernet = {
+      connected = "󰈁",
+      disconnected = "󰌙",
     },
     media = {
       back = "",

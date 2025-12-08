@@ -2,8 +2,12 @@ local icons = require("icons")
 local colors = require("colors")
 local settings = require("settings")
 
--- Execute the event provider binary which provides the event "network_update"
--- for the network interface "en0", which is fired every 2.0 seconds.
+-- Start with default interface (will be updated async)
+local active_interface = "en0"
+local connection_type = "wifi"
+
+-- Execute the event provider binary with default interface
+-- Will be restarted with correct interface once detected
 sbar.exec("killall network_load >/dev/null; $CONFIG_DIR/helpers/event_providers/network_load/bin/network_load en0 network_update 2.0")
 
 local popup_width = 250
@@ -174,11 +178,23 @@ wifi_up:subscribe("network_update", function(env)
 end)
 
 wifi:subscribe({"wifi_change", "system_woke"}, function(env)
-  sbar.exec("ipconfig getifaddr en0", function(ip)
-    local connected = not (ip == "")
+  sbar.exec("for i in 1 2 3 4 5 6 7 8 9; do ipconfig getifaddr en$i 2>/dev/null && echo en$i && exit; done; ipconfig getifaddr en0 2>/dev/null && echo en0", function(result)
+    local iface = result:match("(en%d+)")
+    if iface and iface ~= "en0" then
+      active_interface = iface
+      connection_type = "ethernet"
+    elseif iface == "en0" then
+      active_interface = "en0"
+      connection_type = "wifi"
+    else
+      connection_type = "none"
+    end
+    sbar.exec("killall network_load >/dev/null; $CONFIG_DIR/helpers/event_providers/network_load/bin/network_load " .. active_interface .. " network_update 2.0")
+    local icon_set = (connection_type == "ethernet") and icons.ethernet or icons.wifi
+    local connected = connection_type ~= "none"
     wifi:set({
       icon = {
-        string = connected and icons.wifi.connected or icons.wifi.disconnected,
+        string = connected and icon_set.connected or icon_set.disconnected,
         color = connected and colors.white or colors.red,
       },
     })
@@ -232,3 +248,28 @@ hostname:subscribe("mouse.clicked", copy_label_to_clipboard)
 ip:subscribe("mouse.clicked", copy_label_to_clipboard)
 mask:subscribe("mouse.clicked", copy_label_to_clipboard)
 router:subscribe("mouse.clicked", copy_label_to_clipboard)
+
+-- Detect actual interface asynchronously (non-blocking)
+sbar.exec("for i in 1 2 3 4 5 6 7 8 9; do ipconfig getifaddr en$i 2>/dev/null && echo en$i && exit; done; ipconfig getifaddr en0 2>/dev/null && echo en0", function(result)
+  local iface = result:match("(en%d+)")
+  if iface and iface ~= "en0" then
+    active_interface = iface
+    connection_type = "ethernet"
+  elseif iface == "en0" then
+    active_interface = "en0"
+    connection_type = "wifi"
+  else
+    connection_type = "none"
+  end
+  -- Restart network_load with correct interface
+  sbar.exec("killall network_load >/dev/null; $CONFIG_DIR/helpers/event_providers/network_load/bin/network_load " .. active_interface .. " network_update 2.0")
+  -- Update icon
+  local icon_set = (connection_type == "ethernet") and icons.ethernet or icons.wifi
+  local connected = connection_type ~= "none"
+  wifi:set({
+    icon = {
+      string = connected and icon_set.connected or icon_set.disconnected,
+      color = connected and colors.white or colors.red,
+    },
+  })
+end)
