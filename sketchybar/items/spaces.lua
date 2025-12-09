@@ -25,26 +25,17 @@ for i = 1, 10, 1 do
         },
         padding_right = 1,
         padding_left = 1,
+        blur_radius = 5,
         background = {
-            color = colors.bg1,
-            border_width = 1,
+            color = colors.bgt,
+            corner_radius = 15,
+            border_width = 0,
             height = 26,
-            border_color = colors.black,
         },
         popup = { background = { border_width = 5, border_color = colors.black } }
     })
 
     spaces[i] = space
-
-    -- Single item bracket for space items to achieve double border on highlight
-    local space_bracket = sbar.add("bracket", { space.name }, {
-        background = {
-            color = colors.transparent,
-            border_color = colors.bg2,
-            height = 28,
-            border_width = 2
-        }
-    })
 
     -- Padding space
     sbar.add("space", "space.padding." .. i, {
@@ -71,7 +62,8 @@ for i = 1, 10, 1 do
         space:set({
             icon = { highlight = selected, },
             label = { highlight = selected },
-            background = { border_color = selected and colors.orange or colors.bg2 }
+            -- background = { border_color = selected and colors.orange or colors.bg2, color = selected and colors.oranget or colors.bgt }
+            background = { border_width = 0, color = selected and colors.oranget or colors.bgt }
         })
         -- space_bracket:set({
         --     background = { border_color = selected and colors.grey or colors.bg2 }
@@ -196,12 +188,23 @@ notification_checker:subscribe({ "routine", "system_woke", "space_change" }, fun
 
         local function update_ui()
             local is_selected = space:query().icon.highlight == "on"
-            if notifications.value and not is_selected then
-                space:set({
-                    background = {
-                        border_color = colors.magenta
-                    }
-                })
+            if not is_selected then
+                if notifications.value then
+                    space:set({
+                        background = {
+                            border_color = colors.red,
+                            border_width = 1,
+                            -- color = colors.redt,
+                        },
+                        -- label = { highlight = true, }
+                    })
+                else
+                    space:set({
+                        -- background = { color = colors.bgt, },
+                        -- label = { highlight = false, } })
+                        border_width = 0,
+                    })
+                end
             end
         end
 
