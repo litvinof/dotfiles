@@ -1,5 +1,5 @@
 return {
-    { "savq/melange-nvim" }, -- The golden theme
+    { "savq/melange-nvim" },   -- The golden theme
     { "cocopon/iceberg.vim" }, -- The blue theme
     {
         "nvim-telescope/telescope.nvim",
@@ -52,7 +52,7 @@ return {
         },
         opts = {
             options = {
-                always_show_bufferline=false,
+                always_show_bufferline = false,
                 mode = "tabs",
                 separator_style = "thin",
                 indicator = {
@@ -103,6 +103,16 @@ return {
     {
         'litvinof/nvim-http',
         branch = 'fix/macos-symlink',
-    }
+    },
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && npm install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" },
+    },
+
 
 }
