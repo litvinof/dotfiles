@@ -11,7 +11,7 @@ typedef struct {
 int get_weather_info(weather_info_t *weather) {
     if (weather == NULL) return -1;
 
-    FILE *fp = popen("curl -s --max-time 10 'wttr.in/?format=%t|%C'", "r");
+    FILE *fp = popen("curl -s --max-time 10 'wttr.in/Berlin?format=%t|%C'", "r");
     if (fp == NULL) return -1;
 
     char buf[256];

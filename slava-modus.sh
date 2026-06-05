@@ -47,15 +47,15 @@ if pgrep -x yabai > /dev/null 2>&1; then
     echo "  Stopping sketchybar..."
     brew services stop sketchybar
 
-    echo "  Showing menu bar..."
-    set_menubar_autohide "Never"
+    # echo "  Showing menu bar..."
+    # set_menubar_autohide "Never"
 
     echo "Slava modus OFF"
 else
     echo "Starting Slava modus..."
 
-    echo "  Auto-hiding menu bar..."
-    set_menubar_autohide "Always"
+    # echo "  Auto-hiding menu bar..."
+    # set_menubar_autohide "Always"
 
     echo "  Starting yabai..."
     yabai --start-service
